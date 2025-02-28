@@ -10,18 +10,21 @@ using Microsoft.Extensions.DependencyInjection;
 using Task.Application.Commands;
 using Task.Application.Queries;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-// Enable CORS
+// Add CORS services to the container
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("http://localhost:51479") // React's local dev server
+        policy.WithOrigins("http://localhost:51479") // Frontend URL (Vite dev server URL)
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials(); // Important to allow cookies/credentials
     });
 });
 
@@ -45,7 +48,9 @@ builder.Services.AddValidatorsFromAssemblyContaining<AppTaskValidator>();
 // Add MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
+
 // Register MediatR handlers
+
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(GetAllAppTasksQueryHandler).Assembly);
@@ -67,8 +72,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Use CORS
-app.UseCors("AllowReactApp");
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -77,7 +81,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
+
+// Apply CORS policy globally
+app.UseCors("AllowReactApp");
 
 app.UseAuthorization();
 

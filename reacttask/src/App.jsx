@@ -1,23 +1,13 @@
-import { useState } from 'react'
+import React from 'react';
+import TaskApi from './components/TaskApi'; // Import the TaskApi component
 
-import './App.css'
+const App = () => {
+    return (
+        <div>
+            <h1>Task Management App</h1>
+            <TaskApi /> {/* Render the TaskApi component */}
+        </div>
+    );
+};
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    
-  <>
-      <h1>Task App</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        
-      </div>
-      
-    </>
-  )
-}
-
-export default App
+export default App;
