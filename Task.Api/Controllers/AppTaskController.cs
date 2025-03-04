@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Task.Application.Commands;
 using Task.Application.DTOs;
@@ -8,6 +10,7 @@ namespace Task.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user")]
     public class AppTaskController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -19,6 +22,7 @@ namespace Task.API.Controllers
 
         // GET: api/AppTask
         [HttpGet]
+       
         public async Task<IActionResult> GetAllTasks()
         {
             var query = new GetAllAppTasksQuery();

@@ -41,3 +41,67 @@
 .read-the-docs {
   color: #888;
 }
+
+
+
+
+
+
+/* App.css */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: auto; /* Ensure full height for the body */
+}
+
+body {
+    overflow: auto; /* Allow scrolling if the content overflows */
+}
+
+.animated-background {
+    position: fixed; /* Keep the background fixed while scrolling */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Full height of the viewport */
+    background: linear-gradient(135deg, #AEE1FF, #B3D9F6, #ADD8E6);
+    background-size: 400% 400%;
+    animation: gradientShift 10s ease infinite;
+    z-index: -1; /* Ensure it stays behind content */
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.content {
+    min-height: 100vh; /* Ensure the content takes at least full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1; /* Ensure content stays above the background */
+}
+
+.task-container {
+    min-height: 100%; /* Ensures that task div is tall enough */
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Optional: add slight background to content */
+    box-sizing: border-box;
+    overflow-y: auto; /* Allows scrolling if content inside is too long */
+}
+
+* {
+    box-sizing: border-box;
+}
